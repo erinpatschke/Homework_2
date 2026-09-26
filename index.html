@@ -11,7 +11,7 @@
 
 
 
-<title>Homework 2</title>
+<title>Homework2</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -348,7 +348,7 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Homework 2</h1>
+<h1 class="title toc-ignore">Homework2</h1>
 
 </div>
 
@@ -372,15 +372,8 @@ Frobenius norm error:</p>
 </div>
 <div id="image-1" class="section level2">
 <h2>Image 1</h2>
-<pre class="r"><code>x &lt;- read_csv(&quot;image1.csv&quot;)</code></pre>
-<pre><code>## Rows: 1000 Columns: 100
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## dbl (100): X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12, X13, X14, X15,...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>x &lt;- data.matrix(x)</code></pre>
+<pre class="r"><code>x &lt;- read_csv(&quot;image1.csv&quot;)
+x &lt;- data.matrix(x)</code></pre>
 <div id="original-rank-1-10-approximations" class="section level3">
 <h3>Original + Rank 1-10 Approximations</h3>
 <pre class="r"><code>par(mfrow = c(3, 4))
@@ -426,15 +419,8 @@ capture, this image is not a good candidate for compression.</p>
 </div>
 <div id="image-2" class="section level2">
 <h2>Image 2</h2>
-<pre class="r"><code>x &lt;- read_csv(&quot;image2.csv&quot;)</code></pre>
-<pre><code>## Rows: 1000 Columns: 100
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## dbl (100): X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12, X13, X14, X15,...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>x &lt;- data.matrix(x)</code></pre>
+<pre class="r"><code>x &lt;- read_csv(&quot;image2.csv&quot;)
+x &lt;- data.matrix(x)</code></pre>
 <div id="original-rank-1-10-approximations-1" class="section level3">
 <h3>Original + Rank 1-10 Approximations</h3>
 <pre class="r"><code>par(mfrow = c(3, 4))
@@ -480,15 +466,8 @@ change after that and the error is already close to zero.</p>
 </div>
 <div id="image-3" class="section level2">
 <h2>Image 3</h2>
-<pre class="r"><code>x &lt;- read_csv(&quot;image3.csv&quot;)</code></pre>
-<pre><code>## Rows: 376 Columns: 345
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## dbl (345): X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12, X13, X14, X15,...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>x &lt;- data.matrix(x)</code></pre>
+<pre class="r"><code>x &lt;- read_csv(&quot;image3.csv&quot;)
+x &lt;- data.matrix(x)</code></pre>
 <div id="original-rank-1-10-approximations-2" class="section level3">
 <h3>Original + Rank 1-10 Approximations</h3>
 <pre class="r"><code>par(mfrow = c(3, 4))
@@ -523,9 +502,9 @@ ups and downs across its columns, with a strong dip around column 60,
 one near column 150, and another deep dip around column 260, roughly
 tracing the puppy’s body against the background. The first PC score
 rises to a peak around rows 100-140 and then gradually falls with ups
-and downs, corresponding to where the puppy is the lighter background
-around it. Together, these two components are roughly outlining the
-puppy’s silhouette.</p>
+and downs, corresponding to where the puppy is versus the lighter
+background around it. Together, these two components are roughly
+outlining the puppy’s silhouette.</p>
 <p><strong>My opinion on sufficient k:</strong> The puppy is pretty
 recognizable by around k=5, but edges and fur detail keep sharpening
 through k=10. The error plot has a visible elbow around k=20-30 where it
@@ -536,15 +515,8 @@ sufficient k value.</p>
 </div>
 <div id="image-4" class="section level2">
 <h2>Image 4</h2>
-<pre class="r"><code>x &lt;- read_csv(&quot;image4.csv&quot;)</code></pre>
-<pre><code>## Rows: 213 Columns: 119
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## dbl (119): X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12, X13, X14, X15,...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>x &lt;- data.matrix(x)</code></pre>
+<pre class="r"><code>x &lt;- read_csv(&quot;image4.csv&quot;)
+x &lt;- data.matrix(x)</code></pre>
 <div id="original-rank-1-10-approximations-3" class="section level3">
 <h3>Original + Rank 1-10 Approximations</h3>
 <pre class="r"><code>par(mfrow = c(3, 4))
@@ -582,7 +554,7 @@ and barely visible near the top and bottom, which is why the k=1 image
 also has horizontal banding. So, u1 and z1 alone are just enough to
 roughly locate the brightest part of the original image.</p>
 <p><strong>My opinion on sufficient k:</strong> Based on the
-approximation error curve, a sufficient k value would be around 20 when
+approximation error curve, a sufficient k value would be around 20, when
 the curve starts to flatten out.</p>
 </div>
 </div>

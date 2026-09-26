@@ -1,5 +1,5 @@
 ---
-title: "Homework 2"
+title: "Homework2"
 output: html_document
 ---
 
@@ -26,7 +26,7 @@ library(readr)
 
 ## Image 1
 
-```{r}
+```{r, message=FALSE}
 x <- read_csv("image1.csv")
 x <- data.matrix(x)
 ```
@@ -71,7 +71,7 @@ plot(z1, type = "l", main = "First PC Score")
 
 ## Image 2
 
-```{r}
+```{r, message=FALSE}
 x <- read_csv("image2.csv")
 x <- data.matrix(x)
 ```
@@ -116,7 +116,7 @@ plot(z1, type = "l", main = "First PC Score")
 
 ## Image 3
 
-```{r}
+```{r, message=FALSE}
 x <- read_csv("image3.csv")
 x <- data.matrix(x)
 ```
@@ -153,7 +153,7 @@ plot(u1, type = "l", main = "First Eigenvector")
 plot(z1, type = "l", main = "First PC Score")
 ```
 
-**Interpretation:** The first eigenvector has several ups and downs across its columns, with a strong dip around column 60, one near column 150, and another deep dip around column 260, roughly tracing the puppy's body against the background. The first PC score rises to a peak around rows 100-140 and then gradually falls with ups and downs, corresponding to where the puppy is the lighter background around it. Together, these two components are roughly outlining the puppy's silhouette.
+**Interpretation:** The first eigenvector has several ups and downs across its columns, with a strong dip around column 60, one near column 150, and another deep dip around column 260, roughly tracing the puppy's body against the background. The first PC score rises to a peak around rows 100-140 and then gradually falls with ups and downs, corresponding to where the puppy is versus the lighter background around it. Together, these two components are roughly outlining the puppy's silhouette.
 
 **My opinion on sufficient k:** The puppy is pretty recognizable by around k=5, but edges and fur detail keep sharpening through k=10. The error plot has a visible elbow around k=20-30 where it stops dropping steeply and starts to flatten, so I would call k=20 a sufficient k value.
 
@@ -161,7 +161,7 @@ plot(z1, type = "l", main = "First PC Score")
 
 ## Image 4
 
-```{r}
+```{r, message=FALSE}
 x <- read_csv("image4.csv")
 x <- data.matrix(x)
 ```
@@ -200,4 +200,4 @@ plot(z1, type = "l", main = "First PC Score")
 
 **Interpretation:** The first eigenvector marks, with a deep dip, a bright vertical stripe about two-thirds of the way across the image, with darker areas on either side. The first PC score shows that stripe is strongest around three-quarters of the way down the image and barely visible near the top and bottom, which is why the k=1 image also has horizontal banding. So, u1 and z1 alone are just enough to roughly locate the brightest part of the original image.
 
-**My opinion on sufficient k:** Based on the approximation error curve, a sufficient k value would be around 20 when the curve starts to flatten out.
+**My opinion on sufficient k:** Based on the approximation error curve, a sufficient k value would be around 20, when the curve starts to flatten out.
