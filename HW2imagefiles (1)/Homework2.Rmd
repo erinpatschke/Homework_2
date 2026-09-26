@@ -1,0 +1,203 @@
+---
+title: "Homework 2"
+output: html_document
+---
+
+## Image Compression Function
+
+Here is the function used to compute the rank-k approximation and Frobenius norm error:
+
+```{r}
+compress_image <- function(x, k) {
+  V <- t(x) %*% x
+  eig <- eigen(V)
+  U <- eig$vectors
+  Z <- x %*% U
+  X_k <- Z[, 1:k, drop = FALSE] %*% t(U[, 1:k, drop = FALSE])
+  diff <- x - X_k
+  error <- sqrt(sum(diag(t(diff) %*% diff)))
+  list(approximation = X_k, error = error)
+}
+```
+
+```{r, message=FALSE}
+library(readr)
+```
+
+## Image 1
+
+```{r}
+x <- read_csv("image1.csv")
+x <- data.matrix(x)
+```
+
+### Original + Rank 1-10 Approximations
+
+```{r, fig.width=10, fig.height=8}
+par(mfrow = c(3, 4))
+image(x, col = grey(seq(0,1,length=256)), main = "Original")
+for (k in 1:10) {
+  result <- compress_image(x, k)
+  image(result$approximation, col = grey(seq(0,1,length=256)), main = paste("k =", k))
+}
+```
+
+### Error vs. k
+
+```{r}
+max_k <- min(nrow(x), ncol(x))
+errors <- sapply(1:max_k, function(k) compress_image(x, k)$error)
+plot(1:max_k, errors, type = "b", xlab = "k", ylab = "Frobenius Norm Error",
+     main = "Approximation Error vs. k")
+```
+
+### First Eigenvector and First PC Score
+
+```{r}
+V <- t(x) %*% x
+eig <- eigen(V)
+u1 <- eig$vectors[,1]
+z1 <- (x %*% eig$vectors)[,1]
+
+plot(u1, type = "l", main = "First Eigenvector")
+plot(z1, type = "l", main = "First PC Score")
+```
+
+**Interpretation:** The first eigenvector has one sharp spike around column 78, picking out a single column that stands out from everything else, which lines up with the bright line visible in the original image. The first PC score jumps around rapidly and randomly across all rows, reflecting that the rest of the image is just random noise with no real pattern.
+
+**My opinion on sufficient k:** The error drops in an almost straight line all the way out to around k=95-100, with no clear elbow, and the k=1 through k=10 images all look nearly identical (solid black with the line). Since there is no good low-rank structure to capture, this image is not a good candidate for compression.
+
+---
+
+## Image 2
+
+```{r}
+x <- read_csv("image2.csv")
+x <- data.matrix(x)
+```
+
+### Original + Rank 1-10 Approximations
+
+```{r, fig.width=10, fig.height=8}
+par(mfrow = c(3, 4))
+image(x, col = grey(seq(0,1,length=256)), main = "Original")
+for (k in 1:10) {
+  result <- compress_image(x, k)
+  image(result$approximation, col = grey(seq(0,1,length=256)), main = paste("k =", k))
+}
+```
+
+### Error vs. k
+
+```{r}
+max_k <- min(nrow(x), ncol(x))
+errors <- sapply(1:max_k, function(k) compress_image(x, k)$error)
+plot(1:max_k, errors, type = "b", xlab = "k", ylab = "Frobenius Norm Error",
+     main = "Approximation Error vs. k")
+```
+
+### First Eigenvector and First PC Score
+
+```{r}
+V <- t(x) %*% x
+eig <- eigen(V)
+u1 <- eig$vectors[,1]
+z1 <- (x %*% eig$vectors)[,1]
+
+plot(u1, type = "l", main = "First Eigenvector")
+plot(z1, type = "l", main = "First PC Score")
+```
+
+**Interpretation:** The first eigenvector is a smooth, steadily declining line with no sharp features, showing a mild, consistent contrast trend from left to right. The first PC score jumps around a lot from row to row, but the scale is big compared to u1, meaning almost all of the image's pattern is explained by this one component. This matches the k=1 through k=10 images all looking basically identical to the original.
+
+**My opinion on sufficient k:** The error plot shows a massive drop right at k=1, from about 2 to nearly 0, then stays pretty flat afterward. k=1 is already sufficient here, since the images barely change after that and the error is already close to zero.
+
+---
+
+## Image 3
+
+```{r}
+x <- read_csv("image3.csv")
+x <- data.matrix(x)
+```
+
+### Original + Rank 1-10 Approximations
+
+```{r, fig.width=10, fig.height=8}
+par(mfrow = c(3, 4))
+image(x, col = grey(seq(0,1,length=256)), main = "Original")
+for (k in 1:10) {
+  result <- compress_image(x, k)
+  image(result$approximation, col = grey(seq(0,1,length=256)), main = paste("k =", k))
+}
+```
+
+### Error vs. k
+
+```{r}
+max_k <- min(nrow(x), ncol(x))
+errors <- sapply(1:max_k, function(k) compress_image(x, k)$error)
+plot(1:max_k, errors, type = "b", xlab = "k", ylab = "Frobenius Norm Error",
+     main = "Approximation Error vs. k")
+```
+
+### First Eigenvector and First PC Score
+
+```{r}
+V <- t(x) %*% x
+eig <- eigen(V)
+u1 <- eig$vectors[,1]
+z1 <- (x %*% eig$vectors)[,1]
+
+plot(u1, type = "l", main = "First Eigenvector")
+plot(z1, type = "l", main = "First PC Score")
+```
+
+**Interpretation:** The first eigenvector has several ups and downs across its columns, with a strong dip around column 60, one near column 150, and another deep dip around column 260, roughly tracing the puppy's body against the background. The first PC score rises to a peak around rows 100-140 and then gradually falls with ups and downs, corresponding to where the puppy is the lighter background around it. Together, these two components are roughly outlining the puppy's silhouette.
+
+**My opinion on sufficient k:** The puppy is pretty recognizable by around k=5, but edges and fur detail keep sharpening through k=10. The error plot has a visible elbow around k=20-30 where it stops dropping steeply and starts to flatten, so I would call k=20 a sufficient k value.
+
+---
+
+## Image 4
+
+```{r}
+x <- read_csv("image4.csv")
+x <- data.matrix(x)
+```
+
+### Original + Rank 1-10 Approximations
+
+```{r, fig.width=10, fig.height=8}
+par(mfrow = c(3, 4))
+image(x, col = grey(seq(0,1,length=256)), main = "Original")
+for (k in 1:10) {
+  result <- compress_image(x, k)
+  image(result$approximation, col = grey(seq(0,1,length=256)), main = paste("k =", k))
+}
+```
+
+### Error vs. k
+
+```{r}
+max_k <- min(nrow(x), ncol(x))
+errors <- sapply(1:max_k, function(k) compress_image(x, k)$error)
+plot(1:max_k, errors, type = "b", xlab = "k", ylab = "Frobenius Norm Error",
+     main = "Approximation Error vs. k")
+```
+
+### First Eigenvector and First PC Score
+
+```{r}
+V <- t(x) %*% x
+eig <- eigen(V)
+u1 <- eig$vectors[,1]
+z1 <- (x %*% eig$vectors)[,1]
+
+plot(u1, type = "l", main = "First Eigenvector")
+plot(z1, type = "l", main = "First PC Score")
+```
+
+**Interpretation:** The first eigenvector marks, with a deep dip, a bright vertical stripe about two-thirds of the way across the image, with darker areas on either side. The first PC score shows that stripe is strongest around three-quarters of the way down the image and barely visible near the top and bottom, which is why the k=1 image also has horizontal banding. So, u1 and z1 alone are just enough to roughly locate the brightest part of the original image.
+
+**My opinion on sufficient k:** Based on the approximation error curve, a sufficient k value would be around 20 when the curve starts to flatten out.
